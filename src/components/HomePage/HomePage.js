@@ -40,21 +40,31 @@ class HomePage extends Component {
             if (i !== 4) {
                 URL = `http://wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
 
-                fetch(URL, {
+                // fetch(URL, {
+                //     method: 'GET',
+                //     headers: headersMovies
+                // })
+                // .then(theResponse => theResponse.json())
+                // .then(theData => {
+                //     console.log(theData.data.name);
+                //     listMovies.push(theData);
+                //
+                // });
+
+                listMovies.push(fetch(URL, {
                     method: 'GET',
                     headers: headersMovies
-                })
-                .then(theResponse => theResponse.json())
-                .then(theData => {
-                    console.log(theData.data.name);
-                    listMovies.push(theData);
-
-                });
+                }).then(response => response.json())
+                );
             }
         }
 
-        this.setState({movies: listMovies});
-        console.log(this.state.movies);
+        Promise.all(listMovies).then((data) => {
+            this.setState({movies: data});
+            console.log(this.state.movies);
+        });
+
+
     }
 
 
@@ -79,8 +89,6 @@ class HomePage extends Component {
         return(
             <section className="Home">
                 {allMovies}
-                <Movie name="mama"
-                />
             </section>
         );
     }
