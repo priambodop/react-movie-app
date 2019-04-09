@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { NavLink, Route } from 'react-router-dom';
 
+import MovieDetails from '../MovieDetails/MovieDetails';
 import Movie from '../Movie/Movie';
 import './HomePage.css';
+
 
 class HomePage extends Component {
     state = {
@@ -37,7 +40,7 @@ class HomePage extends Component {
         headersMovies.set('Authorization', 'Bearer ' + tokenMovies);
 
         for (var i = 1; i <= 5; i++) {
-            if (i !== 4) {
+            // if (i !== 4) {
                 URL = `http://wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
 
                 // fetch(URL, {
@@ -56,15 +59,28 @@ class HomePage extends Component {
                     headers: headersMovies
                 }).then(response => response.json())
                 );
-            }
+            // }
         }
 
         Promise.all(listMovies).then((data) => {
+          console.log(data);
+          console.log();
+
+          // let newData = data.map((response) => {
+          //   if (response.status === "ok") {
+          //     console.log(response.data);
+          //     return response.data;
+          //   } else {
+          //     return null;
+          //   }
+          // })
+
             this.setState({movies: data});
-            console.log(this.state.movies);
         });
+    }
 
-
+    movieSelectedHandler = (id) => {
+      this.props.history.push('/homePage/' + id);
     }
 
 
@@ -73,23 +89,57 @@ class HomePage extends Component {
 
         let allMovies = <p>Loading...</p>;
 
+        let movieDetails = [];
+
         if (this.state.movies !== null) {
             allMovies = this.state.movies.map(movie => {
+              if (movie.status === 'error') {
+                return (
+                    <Movie
+                        name={movie.status}
+                        description={movie.message}
+                        
+                    />
+                );
+              }else {
                 return (
                     <Movie
                         name={movie.data.name}
                         description={movie.data.description}
+                        clicked={() => this.movieSelectedHandler(movie.data.id)}
                     />
                 );
+              }
             });
 
         }
-        console.log(allMovies);
+        // console.log(allMovies);
 
         return(
+          <div>
+          <header className="Home">
+                  <nav>
+                      <ul>
+                          <li><NavLink
+                              to="/HomePage"
+                              exact
+                              activeClassName="my-active"
+                              activeStyle={{
+                                  color: '#fa923f',
+                                  textDecoration: 'underline'
+                              }}>Home</NavLink></li>
+                          <li><NavLink to="/logout" >Log Out</NavLink></li>
+                      </ul>
+                  </nav>
+            </header>
+
             <section className="Home">
                 {allMovies}
             </section>
+
+
+            <Route path={this.props.match.url + '/:id'} exact component={MovieDetails}/>
+          </div>
         );
     }
 }

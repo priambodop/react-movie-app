@@ -12,33 +12,46 @@ class Login extends Component {
         submitted: false
     }
 
+    userInputHandler = () => {
+        if (!this.state.username || this.state.username !== "test" ) {
+          return false;
+        }else if(!this.state.password || this.state.password !== "test"){
+          return false;
+        }else {
+          return true;
+        }
+    }
+
     userLoginHandler = (event) => {
         event.preventDefault();
+        let inputHandler = this.userInputHandler();
+        console.log(inputHandler);
+        if (inputHandler) {
+          const POST_URL = "http://wdassignment.devfl.com/api/login";
 
-        const POST_URL = "http://wdassignment.devfl.com/api/login";
+          const headers = new Headers();
 
-        const headers = new Headers();
+          headers.set('Authorization', 'Basic ' +
+          base64.encode(this.state.username + ":" +
+          this.state.password));
 
-        headers.set('Authorization', 'Basic ' +
-        base64.encode(this.state.username + ":" +
-        this.state.password));
+          fetch(POST_URL,{
+              method: 'POST',
+              headers: headers
+          })
+              .then(response => response.json())
+              .then(data => {
+                  localStorage.setItem("theToken", data.data.token);
+                  this.setState({data: data});
 
-        fetch(POST_URL,{
-            method: 'POST',
-            headers: headers
-        })
-            .then(response => response.json())
-            .then(data => {
-                localStorage.setItem("theToken", data.data.token);
-                this.setState({data: data});
-
-                // console.log(data);
-                // console.log('this is token' + localStorage.getItem("theToken"));
-
-                // this.sendTokenHandler();
-                this.setState({submitted: true});
-            })
-            .catch(err => console.log(err));
+                  // console.log(data);
+                  // console.log('this is token' + localStorage.getItem("theToken"));
+                  this.setState({submitted: true});
+              })
+              .catch(err => console.log(err));
+        }else {
+          alert("Oops, Username or Password are invalid...");
+        }
     }
 
     sendTokenHandler = (event) => {
@@ -84,7 +97,7 @@ class Login extends Component {
                 value={this.state.password}
               />
               <br />
-              <input type="submit" value="Submit" />
+              <input type="submit" value="Log In" />
             </form>
           </div>
         );
