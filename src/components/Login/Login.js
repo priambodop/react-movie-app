@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import base64 from 'base-64';
 
+import "./Login.css";
 import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
@@ -81,7 +82,7 @@ class Login extends Component {
         }
 
         return (
-          <div>
+          <div className="Login">
             {redirect}
             <form onSubmit={this.userLoginHandler}>
               <p>Username:</p>
@@ -97,7 +98,7 @@ class Login extends Component {
                 value={this.state.password}
               />
               <br />
-              <input type="submit" value="Log In" />
+              <input style={{fontFamily: "Helvetica"}} type="submit" value="Log In" />
             </form>
           </div>
         );

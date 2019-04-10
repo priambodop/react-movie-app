@@ -64,7 +64,6 @@ class HomePage extends Component {
 
         Promise.all(listMovies).then((data) => {
           console.log(data);
-          console.log();
 
           // let newData = data.map((response) => {
           //   if (response.status === "ok") {
@@ -80,13 +79,11 @@ class HomePage extends Component {
     }
 
     movieSelectedHandler = (id) => {
+      // return <Redirect to="/homePage/:id" />
       this.props.history.push('/homePage/' + id);
     }
 
-
-
     render() {
-
         let allMovies = <p>Loading...</p>;
 
         if (this.state.movies !== null) {
@@ -96,7 +93,7 @@ class HomePage extends Component {
                     <Movie
                         name={movie.status}
                         description={movie.message}
-
+                        clicked={() => this.movieSelectedHandler(4)}
                     />
                 );
               }else {
@@ -134,6 +131,10 @@ class HomePage extends Component {
             <section className="Home">
                 {allMovies}
             </section>
+
+            <div className="Home">
+              <p>Click the movie to see more details below!</p>
+            </div>
 
             <Route path={this.props.match.url + '/:id'} exact component={MovieDetails}/>
           </div>

@@ -38,30 +38,49 @@ class MovieDetails extends Component {
 
   showTheMovies = (id) => {
     let loadedMoviesHolder = this.state.loadedMovies;
-    let text = "";
-    let obj = null;
+
     let pickedMovie = loadedMoviesHolder.filter((movie) => {
       if (movie.status !== 'error' && movie.data.id == id) {
-        return movie
+        return movie;
       }
     });
+
+    if (pickedMovie.length < 1) {
+      pickedMovie = loadedMoviesHolder.filter((movie) => {
+       if (movie.status === 'error') {
+         return movie
+       }
+     });
+    }
 
     return pickedMovie;
   }
 
   render(){
-    let movie = <p style={{textAlign: 'center'}}>Please wait...</p>;
+    let movie = <p style={{textAlign: 'center', color: 'white'}}>Please wait...</p>;
 
     let myMovie = "";
 
     if (this.state.loadedMovies) {
       myMovie = this.showTheMovies(this.props.match.params.id);
-      movie = (
-        <div className="MovieDetails">
-            <h1>{myMovie[0].data.name}</h1>
-            <p>{myMovie[0].data.description}</p>
-        </div>
-      );
+      console.log(myMovie);
+
+      if (myMovie[0].status === 'error') {
+        movie = (
+          <div className="MovieDetails">
+              <h1>{myMovie[0].status}</h1>
+              <p>{myMovie[0].message}</p>
+          </div>
+        );
+      }else{
+        movie = (
+          <div className="MovieDetails">
+              <h1>{myMovie[0].data.name}</h1>
+              <p>{myMovie[0].data.description}</p>
+          </div>
+        );
+      }
+
     }
 
     return movie;

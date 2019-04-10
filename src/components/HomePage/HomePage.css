@@ -19,9 +19,17 @@
     margin: 20px;
 }
 
+.Home p {
+  color: white;
+  font-size: 25px;
+  font-family: helvetica;
+}
+
 .Home a {
     text-decoration: none;
-    color: black;
+    color: white;
+    font-size: 20px;
+    font-family: helvetica;
 }
 
 .Home a:hover,
