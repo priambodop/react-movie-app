@@ -57,7 +57,7 @@ class Login extends Component {
 
     sendTokenHandler = (event) => {
 
-        const MOVIE_URL = "http://wdassignment.devfl.com/api/movies";
+        const MOVIE_URL = "//wdassignment.devfl.com/api/movies";
 
         const headers = new Headers();
         const token = this.state.data.data.token;

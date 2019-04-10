@@ -21,7 +21,7 @@ class MovieDetails extends Component {
     headersMovies.set('Authorization', 'Bearer ' + tokenMovies);
 
     for (var i = 1; i <= 5; i++) {
-            URL = `http://wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
+            URL = `//wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
 
             listMovies.push(fetch(URL, {
                 method: 'GET',

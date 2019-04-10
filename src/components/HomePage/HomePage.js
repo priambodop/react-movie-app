@@ -41,7 +41,7 @@ class HomePage extends Component {
 
         for (var i = 1; i <= 5; i++) {
             // if (i !== 4) {
-                URL = `http://wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
+                URL = `//wdassignment.devfl.com/api/movie?id=${i}%3Chttp://wdassignment.devfl.com/api/movie?id=%7BmovieId%7D%3E`;
 
                 // fetch(URL, {
                 //     method: 'GET',
