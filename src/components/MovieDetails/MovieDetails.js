@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import './MovieDetails.css';
+
 class MovieDetails extends Component {
   state= {
     loadedMovies: null
@@ -35,31 +37,29 @@ class MovieDetails extends Component {
   }
 
   showTheMovies = (id) => {
-    let pickedID = this.props.match.params.id;
-    console.log(pickedID);
     let loadedMoviesHolder = this.state.loadedMovies;
-    let pickedMovie = loadedMoviesHolder.filter(movie => {
-      if (movie.status !== 'error' && movie.data.id === id) {
+    let text = "";
+    let obj = null;
+    let pickedMovie = loadedMoviesHolder.filter((movie) => {
+      if (movie.status !== 'error' && movie.data.id == id) {
         return movie
       }
     });
-    console.log(pickedMovie);
-    console.log(loadedMoviesHolder);
 
     return pickedMovie;
   }
 
   render(){
-    let movie = <p style={{textAlign: 'center'}}>Please select a Movie!</p>;
+    let movie = <p style={{textAlign: 'center'}}>Please wait...</p>;
 
     let myMovie = "";
 
     if (this.state.loadedMovies) {
       myMovie = this.showTheMovies(this.props.match.params.id);
       movie = (
-        <div>
-          <h1>{myMovie.name}</h1>
-          <p>{myMovie.description}</p>
+        <div className="MovieDetails">
+            <h1>{myMovie[0].data.name}</h1>
+            <p>{myMovie[0].data.description}</p>
         </div>
       );
     }

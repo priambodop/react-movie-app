@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, Route } from 'react-router-dom';
+import { Route, NavLink } from 'react-router-dom';
 
 import MovieDetails from '../MovieDetails/MovieDetails';
 import Movie from '../Movie/Movie';
@@ -89,8 +89,6 @@ class HomePage extends Component {
 
         let allMovies = <p>Loading...</p>;
 
-        let movieDetails = [];
-
         if (this.state.movies !== null) {
             allMovies = this.state.movies.map(movie => {
               if (movie.status === 'error') {
@@ -98,7 +96,7 @@ class HomePage extends Component {
                     <Movie
                         name={movie.status}
                         description={movie.message}
-                        
+
                     />
                 );
               }else {
@@ -136,7 +134,6 @@ class HomePage extends Component {
             <section className="Home">
                 {allMovies}
             </section>
-
 
             <Route path={this.props.match.url + '/:id'} exact component={MovieDetails}/>
           </div>
